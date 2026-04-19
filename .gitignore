@@ -1,0 +1,29 @@
+# Unreal Engine build artifacts
+Binaries/
+Intermediate/
+Build/
+Saved/
+DerivedDataCache/
+
+# IDE / editor
+.vs/
+.vscode/
+.idea/
+*.sln
+*.suo
+*.sdf
+*.opensdf
+*.xcodeproj/
+*.xcworkspace/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Packaged output
+*.apk
+*.aab
+*.pak
+*.ucas
+*.utoc

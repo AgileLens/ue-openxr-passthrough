@@ -1,0 +1,25 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "OpenXR Passthrough (FB)",
+	"Description": "PCVR passthrough via XR_FB_passthrough OpenXR extension. Works with Quest Link without Meta XR Plugin dependency.",
+	"Category": "Virtual Reality",
+	"CreatedBy": "Agile Lens",
+	"EnabledByDefault": true,
+	"SupportedTargetPlatforms": [ "Win64" ],
+	"Modules": [
+		{
+			"Name": "OpenXRPassthrough",
+			"Type": "Runtime",
+			"LoadingPhase": "PostConfigInit",
+			"PlatformAllowList": [ "Win64" ]
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "OpenXR",
+			"Enabled": true
+		}
+	]
+}
