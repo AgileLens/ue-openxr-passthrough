@@ -1,5 +1,7 @@
 # UE OpenXR Passthrough
 
+![OpenXR Passthrough — PCVR passthrough via XR_FB_passthrough, no Meta XR Plugin dependency](.github/social-card.png)
+
 A lightweight Unreal Engine plugin that enables Meta Quest **passthrough on PCVR (Quest Link / Air Link)** using the raw `XR_FB_passthrough` OpenXR extension — **without** taking a dependency on the Meta XR Plugin (OculusXR).
 
 Useful if you want passthrough in your PCVR project but want to stay on vanilla OpenXR for portability, avoid vendor SDK lock-in, or ship to non-Meta targets from the same codebase.

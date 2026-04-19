@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" width="1280" height="640">
+  <!-- Background: deep gradient -->
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1020"/>
+      <stop offset="50%" stop-color="#141b2e"/>
+      <stop offset="100%" stop-color="#1a2238"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4ea1ff"/>
+      <stop offset="100%" stop-color="#8a5cff"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#4ea1ff" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#4ea1ff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="softBlur">
+      <feGaussianBlur stdDeviation="20"/>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="640" fill="url(#bg)"/>
+
+  <!-- Ambient glow behind text -->
+  <ellipse cx="920" cy="320" rx="360" ry="260" fill="url(#glow)"/>
+
+  <!-- Decorative grid (subtle) -->
+  <g stroke="#2a3554" stroke-width="1" opacity="0.35">
+    <line x1="0" y1="120" x2="1280" y2="120"/>
+    <line x1="0" y1="240" x2="1280" y2="240"/>
+    <line x1="0" y1="400" x2="1280" y2="400"/>
+    <line x1="0" y1="520" x2="1280" y2="520"/>
+    <line x1="160" y1="0" x2="160" y2="640"/>
+    <line x1="480" y1="0" x2="480" y2="640"/>
+    <line x1="800" y1="0" x2="800" y2="640"/>
+    <line x1="1120" y1="0" x2="1120" y2="640"/>
+  </g>
+
+  <!-- Headset silhouette, abstract -->
+  <g transform="translate(840,180)" opacity="0.9">
+    <!-- Outer body -->
+    <rect x="0" y="0" width="300" height="140" rx="30" fill="#1e2942" stroke="url(#accent)" stroke-width="3"/>
+    <!-- Two lenses -->
+    <circle cx="90" cy="70" r="42" fill="#0b1020" stroke="url(#accent)" stroke-width="2.5"/>
+    <circle cx="210" cy="70" r="42" fill="#0b1020" stroke="url(#accent)" stroke-width="2.5"/>
+    <!-- Pupils / reflection -->
+    <circle cx="90" cy="70" r="22" fill="url(#accent)" opacity="0.7"/>
+    <circle cx="210" cy="70" r="22" fill="url(#accent)" opacity="0.7"/>
+    <!-- Strap -->
+    <path d="M -30 70 Q -60 10 0 0" fill="none" stroke="#3a4668" stroke-width="4"/>
+    <path d="M 330 70 Q 360 10 300 0" fill="none" stroke="#3a4668" stroke-width="4"/>
+  </g>
+
+  <!-- Accent bar -->
+  <rect x="80" y="140" width="80" height="6" fill="url(#accent)" rx="3"/>
+
+  <!-- Category label -->
+  <text x="80" y="180" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="22" font-weight="600" fill="#8a9cc4" letter-spacing="4">UNREAL ENGINE 5 · PLUGIN</text>
+
+  <!-- Title -->
+  <text x="80" y="270" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="74" font-weight="800" fill="#ffffff">OpenXR</text>
+  <text x="80" y="350" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="74" font-weight="800" fill="url(#accent)">Passthrough</text>
+
+  <!-- Subtitle -->
+  <text x="80" y="420" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="28" font-weight="400" fill="#c5d1ea">PCVR passthrough via XR_FB_passthrough.</text>
+  <text x="80" y="458" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="28" font-weight="400" fill="#c5d1ea">No Meta XR Plugin dependency.</text>
+
+  <!-- Tags -->
+  <g font-family="Segoe UI, Inter, Arial, sans-serif" font-size="18" font-weight="600">
+    <rect x="80" y="500" width="120" height="38" rx="19" fill="#1e2942" stroke="#4ea1ff" stroke-width="1.5"/>
+    <text x="140" y="525" text-anchor="middle" fill="#4ea1ff">Quest Link</text>
+
+    <rect x="214" y="500" width="90" height="38" rx="19" fill="#1e2942" stroke="#8a5cff" stroke-width="1.5"/>
+    <text x="259" y="525" text-anchor="middle" fill="#8a5cff">UE 5.7</text>
+
+    <rect x="318" y="500" width="90" height="38" rx="19" fill="#1e2942" stroke="#7acdff" stroke-width="1.5"/>
+    <text x="363" y="525" text-anchor="middle" fill="#7acdff">OpenXR</text>
+
+    <rect x="422" y="500" width="80" height="38" rx="19" fill="#1e2942" stroke="#6ef0b8" stroke-width="1.5"/>
+    <text x="462" y="525" text-anchor="middle" fill="#6ef0b8">MIT</text>
+  </g>
+
+  <!-- Footer -->
+  <text x="80" y="600" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="20" font-weight="500" fill="#6f7fa5">github.com/AgileLens/ue-openxr-passthrough</text>
+
+  <!-- Agile Lens mark, top right -->
+  <g transform="translate(1080,60)">
+    <circle cx="0" cy="0" r="16" fill="none" stroke="url(#accent)" stroke-width="2"/>
+    <circle cx="0" cy="0" r="6" fill="url(#accent)"/>
+    <text x="28" y="6" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#c5d1ea">AGILE LENS</text>
+  </g>
+</svg>

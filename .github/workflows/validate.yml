@@ -1,0 +1,76 @@
+name: Validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  structure:
+    name: Repo structure & manifest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check required files exist
+        run: |
+          set -e
+          test -f OpenXRPassthrough.uplugin         || (echo "Missing .uplugin" && exit 1)
+          test -f Source/OpenXRPassthrough/OpenXRPassthrough.Build.cs
+          test -f Source/OpenXRPassthrough/Public/OpenXRPassthrough.h
+          test -f Source/OpenXRPassthrough/Private/OpenXRPassthrough.cpp
+          test -f README.md
+          test -f LICENSE
+          test -f CHANGELOG.md
+          echo "All required files present."
+
+      - name: Validate .uplugin JSON
+        run: |
+          python3 -c "
+          import json, sys
+          with open('OpenXRPassthrough.uplugin') as f:
+              d = json.load(f)
+          required = ['FileVersion', 'Version', 'VersionName', 'FriendlyName', 'Description', 'Modules']
+          missing = [k for k in required if k not in d]
+          if missing:
+              sys.exit(f'.uplugin missing keys: {missing}')
+          if not any(m.get('Name') == 'OpenXRPassthrough' for m in d['Modules']):
+              sys.exit('Module \"OpenXRPassthrough\" not declared')
+          print('.uplugin valid.')
+          "
+
+      - name: Verify LICENSE is MIT
+        run: |
+          grep -q "MIT License" LICENSE || (echo "LICENSE not MIT" && exit 1)
+          echo "LICENSE OK."
+
+  cpp-lint:
+    name: C++ sanity check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for UE coding issues
+        run: |
+          set -e
+          # No OculusXR / Meta XR Plugin dependency
+          if grep -rn "OculusXR\|OculusHMD\|MetaXR" Source/ 2>&1 | grep -v "no Meta XR"; then
+              echo "ERROR: Found Meta XR Plugin references — this plugin must not depend on it."
+              exit 1
+          fi
+          # Ensure every .cpp has matching license header
+          for f in $(find Source -name "*.cpp" -o -name "*.h"); do
+              head -1 "$f" | grep -q "Copyright" || (echo "$f missing copyright header" && exit 1)
+          done
+          echo "C++ sanity checks passed."
+
+  # Full UE build is left out: it requires a licensed UE install on a
+  # self-hosted runner. To enable it, add a self-hosted runner tagged
+  # "ue-5.7-win64" and a job that invokes:
+  #
+  #   RunUAT.bat BuildPlugin -plugin=$env:GITHUB_WORKSPACE\OpenXRPassthrough.uplugin
+  #                          -package=$env:GITHUB_WORKSPACE\Packaged
+  #                          -targetplatforms=Win64
+  #
+  # For now we validate structure and guard against dependency regressions.
