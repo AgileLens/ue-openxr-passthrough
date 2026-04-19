@@ -7,7 +7,6 @@
 	"Category": "Virtual Reality",
 	"CreatedBy": "Agile Lens",
 	"EnabledByDefault": true,
-	"SupportedTargetPlatforms": [ "Win64" ],
 	"Modules": [
 		{
 			"Name": "OpenXRPassthrough",

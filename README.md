@@ -23,16 +23,18 @@ The official path for Quest Link passthrough in UE is the Meta XR Plugin, which 
 ## Requirements
 
 - Unreal Engine **5.1+** (developed and tested on 5.7)
-- Windows 64-bit (`Win64` only, see Platform Support below)
+- Windows 64-bit target for passthrough to actually do anything (see Platform Support below)
 - Meta Quest with Quest Link / Air Link enabled, Oculus PC app installed
 - UE's built-in OpenXR plugin enabled (`OpenXR`)
 
 ## Platform Support
 
-**Win64 only.** This plugin is unnecessary (and disabled at build time) on other platforms:
+**Compiles for Win64 only.** The module is gated via `PlatformAllowList: ["Win64"]` in the `.uplugin`, so it's automatically skipped when you package for any other platform. You can safely leave the plugin enabled in a cross-platform project (e.g. one that ships to both Win64 and Android) — non-Win64 builds just won't include the module.
 
-- **Standalone Quest / Android:** use engine-native alpha-blend passthrough via `SetEnvironmentBlendMode(AlphaBlend)` in Blueprint/C++
-- **Other PCVR runtimes (SteamVR, etc.):** `XR_FB_passthrough` is Meta-specific; those runtimes don't expose it
+Why Win64 only:
+
+- **Standalone Quest / Android:** `XR_ENVIRONMENT_BLEND_MODE_ALPHA_BLEND` is supported, so the engine-native path (`SetEnvironmentBlendMode(AlphaBlend)` in Blueprint/C++) works without needing `XR_FB_passthrough`. This plugin would be redundant.
+- **Other PCVR runtimes (SteamVR, etc.):** `XR_FB_passthrough` is a Meta-specific extension. Those runtimes don't expose it.
 
 ## Installation
 
