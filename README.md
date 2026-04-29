@@ -77,6 +77,22 @@ To expose this to Blueprints, wrap the module calls in a `UBlueprintFunctionLibr
 
 For scene geometry to composite correctly over passthrough, your materials/scene must output **alpha = 0 where you want passthrough to show through** (UE's convention). The plugin handles the alpha inversion needed for Quest Link at the compositor level. You just need to make sure your background/sky/masked surfaces write zero alpha.
 
+
+
+## Things to Try
+
+1. **Install as a git submodule:** `cd YourProject/Plugins && git submodule add https://github.com/AgileLens/ue-openxr-passthrough.git OpenXRPassthrough` — right-click the `.uproject` to regenerate project files, then rebuild. The plugin is `EnabledByDefault: true` and registers itself automatically.
+2. **Test passthrough in the editor on PCVR:** With Quest Link or Air Link active, click **Play in VR** in the editor. Passthrough activates automatically on `xrSessionBegin` — no Blueprint wiring or extra config needed for the base case.
+3. **Toggle passthrough at runtime from C++:**
+   ```cpp
+   auto& Module = FModuleManager::LoadModuleChecked<FOpenXRPassthroughModule>("OpenXRPassthrough");
+   Module.SetPassthroughEnabled(false);  // pause
+   Module.SetPassthroughEnabled(true);   // resume
+   ```
+   Wrap in a `UBlueprintFunctionLibrary` to expose to Blueprints.
+4. **Verify standalone Quest behavior:** Package for Android and run on-device — confirm the plugin does nothing. Standalone headsets support `XR_ENVIRONMENT_BLEND_MODE_ALPHA_BLEND` natively, so this plugin's code is excluded from non-Win64 builds entirely via `PlatformAllowList`.
+5. **Read the source:** Open `Source/OpenXRPassthrough/Private/OpenXRPassthrough.cpp` (~500 lines). The `AddCompositionLayerProvider` method is the core — it inserts the `XR_FB_passthrough` underlay and sets alpha-blend flags on the projection layer each frame.
+
 ## How It Works (For the Curious)
 
 Standalone Quest supports `XR_ENVIRONMENT_BLEND_MODE_ALPHA_BLEND`, so UE's native path (`SetEnvironmentBlendMode(AlphaBlend)`) works. Quest Link, however, only reports `OPAQUE`. The Meta compositor on the Quest side doesn't forward alpha-blend semantics over Link.
